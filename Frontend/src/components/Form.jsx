@@ -1,72 +1,101 @@
 import {React, useState} from 'react'
 import DropdownList from './DropdownList'
 import data from "../data.json"
+import { useDispatch } from 'react-redux'
+import { addEmployee } from '../store/slice'  
 
 function Form() {
     const states = data.states.map(state => state.name)
     const departements = data.departements
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const dispatch = useDispatch()
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        startDate: "",
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        department: "",
+    })
 
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData({ ...formData, [name]: value })
+    } 
     const handleSave = (e) => {
         e.preventDefault()
+        dispatch(addEmployee(formData))
         setIsModalOpen(true)
+        setFormData({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        startDate: "",
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        department: "",
+        })
     }
-    
     const closeModal = () => {
         setIsModalOpen(false)
     }
+    
   return (
     <div ClassName="form">
-        <form>
+        <form onSubmit={handleSave}>
             <label>
                 First Name
-                <input type="text" name="firstName" />
+                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Last Name
-                <input type="text" name="lastName" />
+                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Date of Birth
-                <input type="date" name="dateOfBirth" />
+                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Start Date
-                <input type="date" name="startDate" />
+                <input type="date" name="startDate" value={formData.startDate} onChange={handleChange}/>
             </label>
             <fieldset ClassName="address">
                 <legend>Address</legend>
                 <label>
                 Street
-                <input type="text" name="street" />
+                <input type="text" name="street" value={formData.street} onChange={handleChange}/>
                 </label>
                 <br />
                 <label>
                     City
-                    <input type="text" name="city" />
+                    <input type="text" name="city" value={formData.city} onChange={handleChange}/>
                 </label>
                 <br />
                 <label>
                     State
-                    <DropdownList content = {states}/>
+                    <DropdownList content = {states} value={formData.state} onChange={handleChange}/>
                 </label>
                 <br />
                 <label>
                     Zip Code
-                    <input type="number" name="zipCode" />
+                    <input type="number" name="zipCode" value={formData.zipCode} onChange={handleChange}/>
                 </label>
             </fieldset>
-            
             <label>
                 Departement
-                <DropdownList content = {departements}/>
+                <DropdownList content = {departements} value={formData.department} onChange={handleChange}/>
             </label>
+            <button type="submit">Save</button>
         </form>
-        <button onClick={handleSave}>Save</button>
-
+        
         {isModalOpen && (
         <div ClassName="modal">
             <p>Employee Created!</p>

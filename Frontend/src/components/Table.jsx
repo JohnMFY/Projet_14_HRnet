@@ -1,5 +1,6 @@
 import React from "react";
-import DataTable from "react-data-table-component"; 
+import DataTable from "react-data-table-component";
+import { useSelector } from "react-redux"
 
 function Table() { 
     const columns = [ 
@@ -48,52 +49,13 @@ function Table() {
             sortable: true 
         }, 
     ]; 
-const mock = true;
-
-const mockData = mock
-  ? [ //mocked data
-      { 
-        firstName: 'John',
-        lastName: 'Doe',
-        startDate: '2015-01-01',
-        department: 'Sales',
-        dateOfBirth: '1990-09-10',
-        street: '2 rue xxx',
-        city: 'Test',
-        state: 'TE',
-        zipCode: 89000,
-      },
-      { 
-        firstName: 'John',
-        lastName: 'Doe',
-        startDate: '2015-01-01',
-        department: 'Human Ressources',
-        dateOfBirth: '1990-09-10',
-        street: '2 rue xxx',
-        city: 'Test',
-        state: 'TE',
-        zipCode: 89000,
-      },
-      { 
-        firstName: 'John',
-        lastName: 'Doe',
-        startDate: '2015-01-01',
-        department: 'Legal',
-        dateOfBirth: '1990-09-10',
-        street: '2 rue xxx',
-        city: 'Test',
-        state: 'TE',
-        zipCode: 89000,
-      },
-    ]
-  : [/* no data*/];
-
+    const employees = useSelector((state) => state.employees.employees)
     
     return ( 
         <div className='table'> 
             <DataTable 
             columns={columns} 
-            data={mockData} 
+            data={employees && employees.length > 0 ? employees : ['']} 
             Sorting
             pagination 
             highlightOnHover 
