@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux"
+import "./table.scss"
 
 function Table() { 
     const columns = [ 
@@ -50,7 +51,6 @@ function Table() {
         }, 
     ]; 
     const employees = useSelector((state) => state.employees.employees)
-
     const [filterText, setFilterText] = useState("");
     const filteredEmployees = employees.filter(
         (employee) =>
@@ -88,7 +88,6 @@ function Table() {
                 />
                 }
             />
-            <p>Showing x to x of {filteredEmployees.length} entries</p>
         </div> 
     );
 } 

@@ -2,7 +2,8 @@ import {React, useState} from 'react'
 import DropdownList from './DropdownList'
 import data from "../data.json"
 import { useDispatch } from 'react-redux'
-import { addEmployee } from '../store/slice'  
+import { addEmployee } from '../store/slice'
+import "./form.scss"  
 
 function Form() {
     const states = data.states
@@ -45,41 +46,48 @@ function Form() {
     }
     
   return (
-    <div ClassName="form">
+    <div className="form">
         <form onSubmit={handleSave}>
             <label>
                 First Name
+                <br />
                 <input type="text" name="firstName" value={formData.firstName} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Last Name
+                <br />
                 <input type="text" name="lastName" value={formData.lastName} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Date of Birth
+                <br />
                 <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange}/>
             </label>
             <br />
             <label>
                 Start Date
+                <br />
                 <input type="date" name="startDate" value={formData.startDate} onChange={handleChange}/>
             </label>
-            <fieldset ClassName="address">
+            <fieldset className="address">
                 <legend>Address</legend>
                 <label>
                 Street
+                <br />
                 <input type="text" name="street" value={formData.street} onChange={handleChange}/>
                 </label>
                 <br />
                 <label>
                     City
+                    <br />
                     <input type="text" name="city" value={formData.city} onChange={handleChange}/>
                 </label>
                 <br />
                 <label>
                 State
+                <br />
                 <select name="state" value={formData.state} onChange={handleChange}>
                 {states.map((state) => (
                     <option key={state.code} value={state.code}>
@@ -87,23 +95,29 @@ function Form() {
                     </option>
                 ))}
                 </select>
+                <br />
                 </label>
                 <br />
                 <label>
                     Zip Code
+                    <br />
                     <input type="number" name="zipCode" value={formData.zipCode} onChange={handleChange}/>
                 </label>
             </fieldset>
             <label>
                 Departement
+                <br />
                 <DropdownList content = {departements} value={formData.department} onChange={handleChange}/>
             </label>
-            <button type="submit">Save</button>
+            <br />
+            <div className="btnDiv">
+                <button type="submit">Save</button>
+            </div>
         </form>
         
         {isModalOpen && (
-        <div ClassName="modal">
-            <p>Employee Created!</p>
+        <div className="modal">
+            <p>Employee Created !</p>
             <i className="fa-solid fa-xmark" onClick={closeModal}></i>
         </div>
         )}
