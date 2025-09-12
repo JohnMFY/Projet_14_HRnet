@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { addEmployee } from '../store/slice'  
 
 function Form() {
-    const states = data.states.map(state => state.name)
+    const states = data.states
     const departements = data.departements
     const [isModalOpen, setIsModalOpen] = useState(false)
     const dispatch = useDispatch()
@@ -20,7 +20,6 @@ function Form() {
         zipCode: "",
         department: "",
     })
-
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
@@ -80,8 +79,14 @@ function Form() {
                 </label>
                 <br />
                 <label>
-                    State
-                    <DropdownList content = {states} value={formData.state} onChange={handleChange}/>
+                State
+                <select name="state" value={formData.state} onChange={handleChange}>
+                {states.map((state) => (
+                    <option key={state.code} value={state.code}>
+                    {state.name}
+                    </option>
+                ))}
+                </select>
                 </label>
                 <br />
                 <label>

@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux"
 
@@ -50,18 +50,45 @@ function Table() {
         }, 
     ]; 
     const employees = useSelector((state) => state.employees.employees)
-    
+
+    const [filterText, setFilterText] = useState("");
+    const filteredEmployees = employees.filter(
+        (employee) =>
+        employee.firstName?.toLowerCase().includes(filterText.toLowerCase()) ||
+        employee.lastName?.toLowerCase().includes(filterText.toLowerCase()) ||
+        employee.department?.toLowerCase().includes(filterText.toLowerCase()) ||
+        employee.city?.toLowerCase().includes(filterText.toLowerCase()) ||
+        employee.state?.toLowerCase().includes(filterText.toLowerCase())
+    );
+
     return ( 
         <div className='table'> 
             <DataTable 
             columns={columns} 
-            data={employees && employees.length > 0 ? employees : ['']} 
+            data={filteredEmployees && filteredEmployees.length > 0 ? filteredEmployees : ['']} 
             Sorting
             pagination 
+            paginationRowsPerPageOptions={[10, 20, 50, 100]}
             highlightOnHover 
             striped 
             responsive 
-            /> 
+            subHeader
+            subHeaderComponent={
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={filterText}
+                    onChange={(e) => setFilterText(e.target.value)}
+                    style={{
+                    padding: "6px",
+                    margin: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    }}
+                />
+                }
+            />
+            <p>Showing x to x of {filteredEmployees.length} entries</p>
         </div> 
     );
 } 
