@@ -4,9 +4,6 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import store from './store/store.js'
 import { Provider } from 'react-redux'
 
-/** STYLE **/
-  import './main.scss'
-
 /** PAGES **/
   import Home from "./pages/Home.jsx";
   import Employees from "./pages/Employees.jsx";

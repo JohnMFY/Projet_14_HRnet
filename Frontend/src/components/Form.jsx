@@ -1,5 +1,6 @@
 import {React, useState} from 'react'
 import DropdownList from './DropdownList'
+import Modal from './Modal'
 import data from "../data.json"
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../store/slice'
@@ -17,9 +18,9 @@ function Form() {
         startDate: "",
         street: "",
         city: "",
-        state: "",
+        state:"",
         zipCode: "",
-        department: "",
+        department:"",
     })
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -107,7 +108,7 @@ function Form() {
             <label>
                 Departement
                 <br />
-                <DropdownList content = {departements} value={formData.department} onChange={handleChange}/>
+                <DropdownList name="departement" content = {departements} value={formData.department} onChange={handleChange}/>
             </label>
             <br />
             <div className="btnDiv">
@@ -116,10 +117,11 @@ function Form() {
         </form>
         
         {isModalOpen && (
-        <div className="modal">
-            <p>Employee Created !</p>
-            <i className="fa-solid fa-xmark" onClick={closeModal}></i>
-        </div>
+            <Modal
+                modalTitle={""}
+                modalContent={"Employee Created !"}
+                closeModal={closeModal}
+            />
         )}
     </div>
   )
