@@ -1,7 +1,7 @@
 import {React, useState} from 'react'
 import DropdownList from './DropdownList'
 import Modal from './Modal'
-//import Modal from "react_simple_modal_component_mfy";
+//import Modal from "react_simple_modal_component_mfy"; //composant npm 
 import data from "../data.json"
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../store/slice'
@@ -122,11 +122,11 @@ function Form() {
                 modalTitle={""}
                 modalContent={"Employee Created !"}
                 closeModal={closeModal}
-                backgroundColor={"rgba(0, 0, 0, 0.7)"}
-                modalBackgroundColor={"white"}
-                modalPadding={"0.5% 10% 0.5% 1%"}
-                iconPositionY={"45vh"}
-                iconPositionX={"121vh"}
+                modalBackgroundClass={'modalBackground'}
+                modalClass={'modal'}
+                modalTitleClass={''}
+                modalContentClass={''}
+                iconClass={'icon'}
             />
         )}
     </div>
