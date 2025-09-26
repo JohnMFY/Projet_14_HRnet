@@ -1,6 +1,7 @@
 # How to start
 ## Installation
-
+    node v20.19.3
+    
 ### Clone repo
     git clone https://github.com/JohnMFY/Projet_14_HRnet.git
     cd Frontend
