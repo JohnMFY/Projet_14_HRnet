@@ -16,8 +16,9 @@ function Table() {
             sortable: true 
         }, 
         { 
-            name: "Start Date", 
-            selector: (row) => row.startDate, sortable: true 
+        name: "Start Date", 
+        selector: (row) => row.startDate ? new Date(row.startDate).toLocaleDateString() : "", 
+        sortable: true 
         }, 
         { 
             name: "Department", 
@@ -25,10 +26,11 @@ function Table() {
             sortable: true 
         }, 
         { 
-            name: "Date of Birth", 
-            selector: (row) => row.dateOfBirth, 
-            sortable: true 
+        name: "Date of Birth", 
+        selector: (row) => row.dateOfBirth ? new Date(row.dateOfBirth).toLocaleDateString() : "", 
+        sortable: true 
         }, 
+
         { 
             name: "Street", 
             selector: (row) => row.street, 

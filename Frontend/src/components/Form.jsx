@@ -1,7 +1,9 @@
 import {React, useState} from 'react'
-import DropdownList from './DropdownList'
 import Modal from './Modal'
 //import Modal from "react_simple_modal_component_mfy"; //composant npm 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select';
 import data from "../data.json"
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../store/slice'
@@ -23,10 +25,18 @@ function Form() {
         zipCode: "",
         department:"",
     })
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
     } 
+    const handleDateChange = (name, value) => {
+        setFormData({ ...formData, [name]: value })
+    }
+    const handleSelectChange = (name, selectedOption) => {
+        setFormData({ ...formData, [name]: selectedOption ? selectedOption.value : "" });
+    };
+
     const handleSave = (e) => {
         e.preventDefault()
         dispatch(addEmployee(formData))
@@ -34,8 +44,8 @@ function Form() {
         setFormData({
         firstName: "",
         lastName: "",
-        dateOfBirth: "",
-        startDate: "",
+        dateOfBirth: null,
+        startDate: null,
         street: "",
         city: "",
         state: "",
@@ -46,6 +56,14 @@ function Form() {
     const closeModal = () => {
         setIsModalOpen(false)
     }
+    const stateOptions = states.map(state => ({
+        value: state.code,
+        label: state.name
+    }));
+    const departmentOptions = departements.map(dep => ({
+        value: dep,
+        label: dep
+    }));
     
   return (
     <div className="form">
@@ -65,13 +83,25 @@ function Form() {
             <label>
                 Date of Birth
                 <br />
-                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange}/>
+                <DatePicker 
+                    selected={formData.dateOfBirth}
+                    onChange={(date) => handleDateChange("dateOfBirth", date)}
+                    placeholderText="dd-MM-YYYY"  
+                    showYearDropdown 
+                    dropdownMode="select"
+                />
             </label>
             <br />
             <label>
                 Start Date
                 <br />
-                <input type="date" name="startDate" value={formData.startDate} onChange={handleChange}/>
+                <DatePicker 
+                    selected={formData.startDate} 
+                    onChange={(date) => handleDateChange("startDate", date)}
+                    placeholderText="dd-MM-YYYY"  
+                    showYearDropdown 
+                    dropdownMode="select"
+                />
             </label>
             <fieldset className="address">
                 <legend>Address</legend>
@@ -90,13 +120,11 @@ function Form() {
                 <label>
                 State
                 <br />
-                <select name="state" value={formData.state} onChange={handleChange}>
-                {states.map((state) => (
-                    <option key={state.code} value={state.code}>
-                    {state.name}
-                    </option>
-                ))}
-                </select>
+                <Select
+                    options={stateOptions}
+                    onChange={(option) => handleSelectChange("state", option)}
+                    value={stateOptions.find(opt => opt.value === formData.state)}
+                />
                 <br />
                 </label>
                 <br />
@@ -109,7 +137,11 @@ function Form() {
             <label>
                 Departement
                 <br />
-                <DropdownList name="departement" content = {departements} value={formData.department} onChange={handleChange}/>
+                <Select
+                    options={departmentOptions}
+                    onChange={(option) => handleSelectChange("department", option)}
+                    value={departmentOptions.find(opt => opt.value === formData.department)}
+                />
             </label>
             <br />
             <div className="btnDiv">
